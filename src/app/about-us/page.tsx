@@ -20,7 +20,7 @@ const AboutUsPage: FC = () => {
         </p>
         <p className="mt-4 text-lg text-gray-600 leading-relaxed">
           Registering is simple and quick - just send us a WhatsApp message, and
-          you're on your way to finding the perfect maid. Empowering local
+          you&apos;re on your way to finding the perfect maid. Empowering local
           communities, our platform fosters connections and ensures safety
           through verification processes. Experience the ease of finding your
           next maid, all through a simple WhatsApp message. Join us today and

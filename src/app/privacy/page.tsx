@@ -66,7 +66,7 @@ const PrivacyPage: FC = () => {
           </p>
 
           <h2 className="mt-6 text-xl font-semibold text-gray-900">
-            Children's Privacy
+            Children&apos;s Privacy
           </h2>
           <p className="mt-2 text-gray-500">
             Our service is not intended for children. We do not knowingly
