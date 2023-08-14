@@ -66,7 +66,7 @@ export const ContactUsForm: FC = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="flex flex-col bg-accent p-28 rounded gap-8">
-          <h1 className="text-cyan-50 text-4xl font-bold text-center">
+          <h1 className="text-4xl font-bold text-center">
             Contact Us Directly From Here
           </h1>
           <div className="flex gap-8">
@@ -142,7 +142,7 @@ export const ContactUsForm: FC = () => {
             />
           </div>
           <div>
-            <Button variant="secondary" disabled={loading}>
+            <Button disabled={loading}>
               Submit
             </Button>
           </div>
