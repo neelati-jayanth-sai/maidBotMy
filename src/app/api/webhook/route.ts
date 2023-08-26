@@ -52,13 +52,13 @@ export async function POST(req: Request) {
 }
 
 type GetReq = {};
-export async function GET(req: any) {
+export async function GET(req: Request) {
   /**
    * UPDATE YOUR VERIFY TOKEN
    *This will be the Verify Token value when you set up webhook
    **/
   const verify_token = process.env.VERIFY_TOKEN;
-  console.log({ req: req, body: req.body });
+  const { searchParams } = new URL(req.url)
   await db.insert(req_dumps).values({
     body: req.body,
     req_text: JSON.stringify(req, null, 2) as any,
@@ -66,9 +66,9 @@ export async function GET(req: any) {
 
 
   // Parse params from the webhook verification request
-  let mode = req.body?.["hub.mode"] ?? "";
-  let token = req.body?.["hub.verify_token"] ?? "";
-  let challenge = req.body?.["hub.challenge"] ?? "";
+  let mode = searchParams.get('hub.mode')
+  let token = searchParams.get('hub.verify_token')
+  let challenge = searchParams.get('hub.challenge')
 
   // Check if a token and mode were sent
   if (mode && token) {
