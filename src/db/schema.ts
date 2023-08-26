@@ -12,4 +12,10 @@ export const messages = pgTable("messages", {
   createAt: timestamp("create_at").defaultNow(),
 });
 
+export const req_dumps = pgTable('req_dumps', {
+  id: serial("id").primaryKey(),
+  req_text: text('req_text'),
+  body: text('body')
+})
 export type Messages = InferModel<typeof messages, "select">;
+export type ReqDumps = InferModel<typeof req_dumps, "select">;

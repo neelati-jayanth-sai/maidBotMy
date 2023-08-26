@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
+import { db } from "@/db";
+import { req_dumps } from "@/db/schema";
 
 const token = process.env.WHATSAPP_TOKEN;
 
@@ -9,6 +11,10 @@ export async function POST(req: Request) {
 
   // Check the Incoming webhook message
   console.log(JSON.stringify(req.body, null, 2));
+  await db.insert(req_dumps).values({
+    body: body,
+    req_text: JSON.stringify(req, null, 2) as any,
+  });
 
   // info on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
   if (body.object) {
@@ -52,6 +58,12 @@ export async function GET(req: any) {
    *This will be the Verify Token value when you set up webhook
    **/
   const verify_token = process.env.VERIFY_TOKEN;
+  console.log({ req: req, body: req.body });
+  await db.insert(req_dumps).values({
+    body: req.body,
+    req_text: JSON.stringify(req, null, 2) as any,
+  });
+
 
   // Parse params from the webhook verification request
   let mode = req.body?.["hub.mode"] ?? "";
