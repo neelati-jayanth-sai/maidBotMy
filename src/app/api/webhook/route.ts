@@ -60,7 +60,7 @@ export async function GET(req: Request) {
   const verify_token = process.env.VERIFY_TOKEN;
   const { searchParams } = new URL(req.url)
   await db.insert(req_dumps).values({
-    body: req.body,
+    body: JSON.stringify(req?.body, null, 2),
     req_text: JSON.stringify(req, null, 2) as any,
   });
 
