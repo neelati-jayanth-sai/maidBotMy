@@ -12,9 +12,16 @@ export async function POST(req: Request) {
       lastName,
       message,
       mobileNumber,
-      subject
+      subject,
     })
     .returning();
   console.log(res);
-  return new Response("ok");
+  return new Response("ok", {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  });
 }
