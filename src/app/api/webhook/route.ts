@@ -13,7 +13,7 @@ export async function POST(req: Request) {
   console.log(JSON.stringify(req.body, null, 2));
   await db.insert(req_dumps).values({
     body: body,
-    req_text: JSON.stringify(req.body, null, 2) as any,
+    req_text: JSON.stringify(req.body) as any,
   });
 
   // info on WhatsApp text message payload: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/payload-examples#text-messages
