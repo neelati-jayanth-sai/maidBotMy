@@ -24,7 +24,7 @@ export async function POST(req: Request) {
 
   if (body.object) {
     await handleIncomingMessage(body, {
-      onTextMessage: (IncomingMessage) => {
+      onTextMessage: async (IncomingMessage) => {
         console.log({ IncomingMessage });
       },
     });
