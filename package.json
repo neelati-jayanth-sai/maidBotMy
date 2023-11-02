@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "prisma:setup": "prisma db pull && prisma db generate",
     "migration:generate": "drizzle-kit generate:pg",
     "migration:push": "drizzle-kit generate:pg && node -r esbuild-register ./src/db/migrate.ts",
     "whatsapp:migration:push": "drizzle-kit generate:pg && node -r esbuild-register ./src/lib/whatsapp/db/migrate.ts"
