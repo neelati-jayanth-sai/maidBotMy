@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL_LOCAL")
+}
+
+model Sender {
+  id          Int       @id @default(autoincrement())
+  name        String?   @db.VarChar(255)
+  phoneNumber String    @unique @db.VarChar(20)
+  Messages    Message[]
+}
+
+model Message {
+  id                      Int                      @id @default(autoincrement())
+  whatsappId              String                   @unique @db.VarChar(255)
+  senderId                Int
+  timestamp               DateTime                 @db.Timestamp(6)
+  messageType             String                   @db.VarChar(20)
+  LocationMessage         LocationMessage?
+  MediaMessage            MediaMessage?
+  Sender                  Sender                   @relation(fields: [senderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  ReactionMessage         ReactionMessage?
+  TextMessage             TextMessage?
+  UnknownMessage          UnknownMessage?
+  QuickReplyButtonMessage QuickReplyButtonMessage?
+  ListMessageReply        ListMessageReply?
+  ReplyButtonMessage      ReplyButtonMessage?
+}
+
+model TextMessage {
+  messageId Int     @id @unique
+  body      String
+  Message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+}
+
+model ReactionMessage {
+  messageId        Int     @id @unique
+  reactedMessageId String  @db.VarChar(255)
+  emoji            String  @db.VarChar(10)
+  Message          Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+}
+
+model MediaMessage {
+  messageId  Int     @id @unique
+  mediaUrl   String  @db.VarChar(255)
+  mimeType   String  @db.VarChar(50)
+  fileSha256 String  @db.VarChar(64)
+  fileLength Int
+  caption    String?
+  Message    Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+}
+
+model LocationMessage {
+  messageId Int     @id @unique
+  latitude  Decimal
+  longitude Decimal
+  name      String? @db.VarChar(255)
+  address   String? @db.VarChar(255)
+  Message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+}
+
+model UnknownMessage {
+  messageId Int     @id @unique
+  Message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+}
+
+model QuickReplyButtonMessage {
+  text      String
+  payload   String
+  message   Message @relation(fields: [messageId], references: [id])
+  messageId Int     @id @unique
+}
+
+model ListMessageReply {
+  messageId   Int     @id @unique
+  listReplyId String
+  title       String
+  description String
+  message     Message @relation(fields: [messageId], references: [id])
+}
+
+model ReplyButtonMessage {
+  messageId     Int     @id @unique
+  buttonReplyId String
+  title         String
+  message       Message @relation(fields: [messageId], references: [id])
+}
